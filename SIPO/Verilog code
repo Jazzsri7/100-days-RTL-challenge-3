@@ -1,0 +1,26 @@
+module SIPO(D,clk,reset,out);
+input D;
+input clk,reset;
+output [3:0] out;
+wire [3:0] Q;
+
+d_ff ff1(.d(D),.q(Q[0]),.clk(clk),.reset(reset));
+d_ff ff2(.d(Q[0]),.q(Q[1]),.clk(clk),.reset(reset));
+d_ff ff3(.d(Q[1]),.q(Q[2]),.clk(clk),.reset(reset));
+d_ff ff4(.d(Q[2]),.q(Q[3]),.clk(clk),.reset(reset));
+
+assign out = Q;
+
+endmodule
+	
+module d_ff(d,q,clk,reset);
+input clk,d,reset;
+output reg q;
+always@(posedge clk or posedge reset)
+begin
+	if(reset)
+		q<=1'b0;
+	else
+		q<=d;
+end
+endmodule 

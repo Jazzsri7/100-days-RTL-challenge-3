@@ -1,0 +1,41 @@
+module SIPO_tb();
+reg D,clk,reset;
+wire [3:0] out;
+
+SIPO DUT(.D(D),.clk(clk),.reset(reset),.out(out));
+
+initial 
+begin
+	clk=1'b1;
+	forever #5 clk=~clk;
+end
+
+initial 
+begin
+	reset=1;
+	D=1'b1;
+	#10
+	reset=0;
+    D=1'b1;
+	#10
+	D=1'b1;
+	#10
+	D=1'b0;
+	#10
+	D=1'b1;
+	#10
+	reset=1;
+	#10
+	reset=0;
+	D=1'b1;
+	#10
+	D=1'b0;
+	#10
+	D=1'b0;
+	#10
+	D=1'b1;
+	#10
+	$finish;
+	
+end
+endmodule

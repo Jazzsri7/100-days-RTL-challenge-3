@@ -1,0 +1,22 @@
+module mod_12_counter_tb();
+	reg clk,reset;
+	wire [3:0] count;
+		
+	mod_12_counter DUT(.clk(clk),.reset(reset),.count(count));
+	
+	initial
+	begin
+		clk=1'b1;
+		forever #5 clk=~clk;
+	end
+	
+	initial
+	begin
+		reset=1;
+		#10;
+		reset=0;
+		#150;
+		reset=1;
+		#10 $finish;
+	end
+endmodule

@@ -1,0 +1,31 @@
+module adder_subtractor_tb();
+reg [3:0] a;
+reg [3:0] b;
+reg control;
+wire [3:0] out;
+wire cout;
+
+adder_subtractor DUT(.a(a),.b(b),.control(control),.out(out),.cout(cout));
+
+initial
+begin
+	a = 4'b0000;
+    b = 4'b0000;
+    control = 0;
+    #10; 
+    
+    a = 4'b0101; b = 4'b0011; control = 0; 
+    #10;
+    a = 4'b1001; b = 4'b0110; control = 0; 
+    #10;
+    a = 4'b0111; b = 4'b0101; control = 0; 
+    #10; 
+    a = 4'b0101; b = 4'b0011; control = 1; 
+    #10;
+    a = 4'b1001; b = 4'b0110; control = 1; 
+    #10;
+    a = 4'b0111; b = 4'b0101; control = 1; 
+    #10 $finish;
+
+end
+endmodule

@@ -1,0 +1,21 @@
+module adder_subtractor(a,b,control,out,cout);
+input [3:0] a;
+input [3:0] b;
+input control;
+output [3:0] out;
+output cout;
+
+wire [3:0] b_xor;
+wire [3:0] sum;
+wire cin = control; 
+
+//XOR each bit of b with control input
+assign b_xor = b ^ {4{control}};
+
+//4-bit Ripple Carry Adder
+assign {cout, sum} = a + b_xor + cin;
+
+// Result is the sum
+assign out = sum;
+
+endmodule

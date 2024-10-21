@@ -1,0 +1,34 @@
+module bidirectional_shift_tb();
+reg Din,control,clk,reset;
+wire [3:0] Q;
+
+bidirectional_shift DUT(.Din(Din),.control(control),.clk(clk),.reset(reset),.Q(Q));
+
+initial 
+begin
+	clk=1'b1;
+	forever #5 clk=~clk;
+end
+
+initial
+begin
+	control=0;
+    Din=1;
+	reset=1;
+	#20
+	reset=0;
+	control = 0;
+    Din = 1;
+    #40
+	reset=1;
+	#20
+	reset=0;
+	control = 1;
+    Din = 1;
+    #40 $finish;
+end
+initial
+begin
+	$monitor("Value of Q=%b",Q);
+end
+endmodule

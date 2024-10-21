@@ -1,0 +1,41 @@
+module bidirectional_shift(Din,control,clk,reset,Q);
+input Din,control,clk,reset;
+output [3:0] Q;
+wire [3:0] m;
+wire [3:0] w;
+
+mux m1(.Din(Din),.q(w[1]),.sel(control),.y(m[0]));
+mux m2(.Din(w[0]),.q(w[2]),.sel(control),.y(m[1]));
+mux m3(.Din(w[1]),.q(w[3]),.sel(control),.y(m[2]));
+mux m4(.Din(w[2]),.q(Din),.sel(control),.y(m[3]));
+
+D_ff d1(.D(m[0]),.clk(clk),.reset(reset),.Q(w[0]));
+D_ff d2(.D(m[1]),.clk(clk),.reset(reset),.Q(w[1]));
+D_ff d3(.D(m[2]),.clk(clk),.reset(reset),.Q(w[2]));
+D_ff d4(.D(m[3]),.clk(clk),.reset(reset),.Q(w[3]));
+
+assign Q=w;
+
+endmodule
+
+//D flip-flop module
+module D_ff(D,Q,clk,reset);
+input D,clk,reset;
+output reg Q;
+always@(posedge clk or posedge reset)
+begin
+	if(reset)
+		Q=4'b0;
+	else 
+		Q=D;
+end
+endmodule 
+	
+//Mux module
+module mux(Din,q,y,sel);
+input Din,sel,q;
+output y;
+
+assign y = sel ? q : Din;
+
+endmodule 

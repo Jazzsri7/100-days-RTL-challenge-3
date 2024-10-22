@@ -1,0 +1,20 @@
+module BCD_Excess(BCD,excess);
+input [3:0] BCD;
+output reg [3:0] excess;
+always@(*)
+begin
+	case(BCD)
+	4'b0000 : excess = 4'b0011;
+	4'b0001 : excess = 4'b0100;
+	4'b0010 : excess = 4'b0101;
+	4'b0011 : excess = 4'b0110;
+	4'b0100 : excess = 4'b0111;
+	4'b0101 : excess = 4'b1000;
+	4'b0110 : excess = 4'b1001;
+	4'b0111 : excess = 4'b1010;
+	4'b1000 : excess = 4'b1011;
+	4'b1001 : excess = 4'b1100;
+	default : excess = 4'b0000;
+	endcase
+end
+endmodule

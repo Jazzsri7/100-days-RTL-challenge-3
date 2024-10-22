@@ -1,0 +1,26 @@
+module BCD_Excess_tb();
+	reg [3:0] BCD;
+	wire [3:0] excess;
+	integer i;
+	
+//Instantiation and port mapping
+	BCD_Excess DUT(.BCD(BCD),.excess(excess));
+	
+//initializing inputs
+	initial
+	begin
+		BCD=0;
+		#10;
+		for(i=0;i<10;i=i+1)
+		begin
+		BCD = i;
+		#10;
+		end
+		#20 $finish;
+	end
+	
+	initial
+	begin
+		$monitor("Value of Excess-3=%b",excess);
+	end
+endmodule 

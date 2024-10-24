@@ -1,0 +1,44 @@
+module Seq_detector(
+    input clk,
+    input reset,
+    input in,
+    output reg out
+);
+
+parameter Idle = 4'b0000;
+parameter S1 = 4'b0001;
+parameter S10 = 4'b0010;
+parameter S101 = 4'b0011;
+parameter S1011 = 4'b0100;
+
+reg [3:0] state, next_state;
+
+
+//State transition logic
+always @(posedge clk or posedge reset) 
+begin
+    if (reset) 
+	begin
+        state = Idle;
+        out = 1'b0;
+    end 
+	else 
+	begin
+        state = next_state;
+        out = (state == S1011);
+    end
+end
+
+// Next state logic
+always @(*) begin
+    case (state)
+        Idle:   next_state = (in) ? S1 : Idle;
+        S1:     next_state = (in) ? S1 : S10;
+        S10:    next_state = (in) ? S101 : Idle;
+        S101:   next_state = (in) ? S1011 : S10;
+        S1011:  next_state = (in) ? S1 : Idle;
+        default: next_state = Idle;
+    endcase
+end
+
+endmodule 

@@ -1,0 +1,25 @@
+module Nto1_mux_tb();
+parameter N=16;
+reg [N-1:0] in;
+reg [$clog2(N)-1:0] sel;
+wire out;
+integer i;
+
+Nto1_mux DUT(.in(in),.sel(sel),.out(out));
+
+initial 
+begin
+	in = 16'b1100101000111010; 
+    sel = 0;
+    #10; 
+	
+	for (i = 0; i< N; i = i + 1) 
+	begin
+		sel = i;
+    #10; 
+    $display("sel = %d, out = %b", sel, out);
+  end
+
+    $finish; 
+end
+endmodule 
